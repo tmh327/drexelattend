@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>User Signin</title>
+      <link href="style.css" rel="stylesheet">
+      <script src="signin.js" defer></script>
+   </head>
+
+    <body onload="checkForm()">
+    	<h1>User Sign In</h1>
+
+  		<form>
+  		<div class="form-group">
+    	<label for="fullName">Full Name</label>
+    	<br>
+    	<input type="text" name="fullName" id="fullName" value=""/>
+    	</div>
+    	
+    	<div class="form-group">
+    	<label for="email">Email</label>
+    	<br>
+   		<input type="email" name="email" id="email" value=""/>
+   		</div>
+
+   		<div class="form-group">
+   		<label for="password">Password</label>
+   		<br>
+   		<input type="password" name="password" id="password" value=""/>
+    	</div>
+
+   		<div class="form-group">
+   		<label for="passwordConfirm">Confirm Password</label>
+   		<br>
+   		<input type="password" name="passwordConfirm" id="passwordConfirm" value=""/>
+    	</div>
+
+		<div id="formErrors"></div>
+
+   		<input type="submit" id="submit" value="Signin">
+
+  		</form>
+    </body>
+
+</html>
