@@ -1,0 +1,14 @@
+    create table professors (professor_id INT PRIMARY KEY AUTO_INCREMENT, username varchar(250) NOT NULL UNIQUE, password varchar(250) NOT NULL);
+    create table classes (class_id INT PRIMARY KEY AUTO_INCREMENT, name varchar(250) NOT NULL, professor_id int not null, foreign key (professor_id) references professors(professor_id));
+    create table attend (id INT PRIMARY KEY AUTO_INCREMENT, student varchar(250) NOT NULL, class_id int not null, foreign key (class_id) references classes(class_id));
+
+INSERT into professors(username, password)
+    values('augenblick', '123456'), ('burlick', 'abcdef'), ('boady','xyzlmn');
+
+INSERT into classes(name, professor_id)
+    values('cs375', '1'),('cs265', '1');
+
+INSERT into attend(student, class_id)
+    values('trang', '1'), ('john', '4');
+
+select A.student, C.name, P.username from attend A INNER JOIN classes C on C.class_id = A.class_id INNER JOIN professors P on P.professor_id = C.professor_id;
