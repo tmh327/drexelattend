@@ -5,7 +5,7 @@
 //import key
 let myKey = require("../sqlinfo.json");
 
-//import database
+//import database and login info
 let mysql = require('mysql');
 let con = mysql.createConnection({
 	'host': 'localhost',
@@ -29,9 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //import request
 let request = require("request");
 
-/////////////////////
-// OPEN LOCAL PORT //
-/////////////////////
+///////////////////////////////////////////
+// OPEN LOCAL PORT & CONNECT TO DATABASE //
+///////////////////////////////////////////
 
 //Begin listening on port 8080...
 app.listen(8080, function() {
@@ -46,6 +46,10 @@ con.connect(function(err) {
 		console.log("Database successfully connected.");
 	}	
 });
+
+/////////////////////////
+// WEBPAGE INTERACTION //
+/////////////////////////
 
 //GET for getting classes
 app.get("/getclasses", function(req,res){
@@ -178,8 +182,3 @@ app.get("/editClass", function(req,res){
 		}
 	});
 });
-
-///////////////
-// FUNCTIONS //
-///////////////
-

@@ -27,7 +27,7 @@ function request(){
 		}
 	}
 	
-	//Prep and send URL with latitude and logitude data
+	//Prep URL
 	let URL = "./getclasses?id=" + profID.toString();
 	xhttp.open("GET",URL,true);
 	xhttp.send();

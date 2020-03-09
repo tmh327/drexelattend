@@ -1,7 +1,11 @@
 //Timer for error message
 var myTimer;
 
-//Determine professor ID
+/////////////////////
+// OBTAIN URL INFO //
+/////////////////////
+
+//Determine professor ID from URL
 var profID = getQueryVariable("profid");
 
 function getQueryVariable(variable)
@@ -15,6 +19,10 @@ function getQueryVariable(variable)
        return(false);
 }
 
+//////////////////////////
+// BUTTON FUNCTIONALITY //
+//////////////////////////
+
 //Submit data after validation
 document.getElementById("buttonSubmit").addEventListener("click", validateData);
 
@@ -23,12 +31,17 @@ document.getElementById("buttonReturn").addEventListener("click", function(){
 	document.location.href='professorhub.html?profid=' + profID.toString();
 });
 
+
+////////////////////////
+// SERVER INTERACTION //
+////////////////////////
+
 function request(){
 	//Form new xhttp request
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if(xhttp.readyState == 4 && xhttp.status == 200) {
-			//Upon reception of response, distribute received info
+			//Redirect user upon response
 			document.location.href='professorhub.html?profid=' + profID.toString();
 		}
 	}
@@ -36,29 +49,16 @@ function request(){
 	//Prep Query String
 	let queryString = getQueryFromInputs();
 	
-	//Prep and send URL with latitude and logitude data
+	//Prep URL for new class
 	let URL = "http://localhost:8080/newClass";
 	xhttp.open("POST",URL);
 	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhttp.send(queryString);
 }
 
-function getClasses(){
-	//Form new xhttp request
-	let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function () {
-		if(xhttp.readyState == 4 && xhttp.status == 200) {
-			var myClasses = JSON.parse(xhttp.responseText).Classes;
-			console.log(myClasses);
-			return myClasses;
-		}
-	}
-	
-	//Prep and send URL with latitude and logitude data
-	let URL = "http://localhost:8080/getClasses";
-	xhttp.open("GET",URL);
-	xhttp.send();
-}
+///////////////////////////
+// VALIDATE USER ENTRIES //
+///////////////////////////
 
 function validateData(){
 	//Prepare for data validation! Error code is 0 by default.
@@ -166,6 +166,7 @@ function between(x, min, max) {
 	return (min <= parseInt(x) && max >= parseInt(x))
 }
 
+//Package user entries for server
 function getQueryFromInputs(){
 	rv = {};
 	//Get Name

@@ -1,12 +1,12 @@
+//Timer variable for error message management
 var myTimer;
+
+/////////////////////
+// OBTAIN URL INFO //
+/////////////////////
+
 var profID = getQueryVariable("profid");
 var classID = getQueryVariable("id");
-
-document.getElementById("buttonSubmit").addEventListener("click", validateData);
-document.getElementById("buttonDelete").addEventListener("click", requestDelete);
-document.getElementById("buttonReturn").addEventListener("click", function(){
-	document.location.href='professorhub.html?profid=' + profID.toString();
-});
 
 function getQueryVariable(variable)
 {
@@ -19,12 +19,27 @@ function getQueryVariable(variable)
        return(false);
 }
 
+//////////////////////////
+// BUTTON FUNCTIONALITY //
+//////////////////////////
+
+document.getElementById("buttonSubmit").addEventListener("click", validateData);
+document.getElementById("buttonDelete").addEventListener("click", requestDelete);
+document.getElementById("buttonReturn").addEventListener("click", function(){
+	document.location.href='professorhub.html?profid=' + profID.toString();
+});
+
+////////////////////////
+// SERVER INTERACTION //
+////////////////////////
+
+//Save changes
 function request(){
 	//Form new xhttp request
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if(xhttp.readyState == 4 && xhttp.status == 200) {
-			//Upon reception of response, distribute received info
+			//Redirect user upon response
 			document.location.href='professorhub.html?profid=' + profID.toString();
 		}
 	}
@@ -32,19 +47,20 @@ function request(){
 	//Prep Query String
 	let queryString = getQueryFromInputs();
 	
-	//Prep and send URL with latitude and logitude data
+	//Prep and send URL with user data
 	let URL = "http://localhost:8080/editClass";
 	xhttp.open("POST",URL);
 	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhttp.send(queryString);
 }
 
+//Remove class
 function requestDelete(){
 	//Form new xhttp request
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if(xhttp.readyState == 4 && xhttp.status == 200) {
-			//Upon reception of response, distribute received info
+			//Redirect user upon response
 			document.location.href='professorhub.html?profid=' + profID.toString();
 		}
 	}
@@ -52,30 +68,18 @@ function requestDelete(){
 	//Prep Query String
 	let queryString = {};
 	queryString.id = classID;
+	queryString = JSON.stringify(queryString);
 	
-	//Prep and send URL with latitude and logitude data
+	//Prep URL for deletion
 	let URL = "http://localhost:8080/deleteClass";
 	xhttp.open("POST",URL);
 	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	xhttp.send(JSON.stringify(queryString));
+	xhttp.send(queryString);
 }
 
-function getClasses(){
-	//Form new xhttp request
-	let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function () {
-		if(xhttp.readyState == 4 && xhttp.status == 200) {
-			var myClasses = JSON.parse(xhttp.responseText).Classes;
-			console.log(myClasses);
-			return myClasses;
-		}
-	}
-	
-	//Prep and send URL with latitude and logitude data
-	let URL = "http://localhost:8080/getClasses";
-	xhttp.open("GET",URL);
-	xhttp.send();
-}
+///////////////////////////
+// VALIDATE USER ENTRIES //
+///////////////////////////
 
 function validateData(){
 	var errorCode = 0;
@@ -145,6 +149,7 @@ function validateData(){
 	}
 }
 
+//Throw error if applicable
 function throwError(code){
 	var msg = "";
 	switch(code){
@@ -169,6 +174,7 @@ function throwError(code){
 	}, 5000);
 }
 
+//Determine if number is between min & max
 function between(x, min, max) {
 	if (isNaN(parseInt(x))){
 		console.log("Non number between");
@@ -177,6 +183,7 @@ function between(x, min, max) {
 	return (min <= parseInt(x) && max >= parseInt(x))
 }
 
+//Package user entries for server
 function getQueryFromInputs(){
 	rv = {};
 	//Get Unique class ID
