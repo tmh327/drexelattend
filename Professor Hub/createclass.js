@@ -29,7 +29,7 @@ function request(){
 	xhttp.onreadystatechange = function () {
 		if(xhttp.readyState == 4 && xhttp.status == 200) {
 			//Upon reception of response, distribute received info
-			document.location.href='professorhub.html';
+			document.location.href='professorhub.html?profid=' + profID.toString();
 		}
 	}
 	

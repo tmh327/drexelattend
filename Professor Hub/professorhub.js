@@ -1,7 +1,10 @@
 var profID = getQueryVariable("profid");
 request();
-updateID();
-document.getElementById("createClass").href = "http://localhost:8080/createclass.html?profid=" + profID.toString();
+document.getElementById("pin").innerHTML = profID.toString();
+
+document.getElementById("buttonCreate").addEventListener("click", function(){
+	document.location.href='createclass.html?profid=' + profID.toString();
+});
 
 function getQueryVariable(variable)
 {
