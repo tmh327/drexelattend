@@ -95,6 +95,20 @@ app.post("/editClass", function(req,res){
 	res.send();
 });
 
+//POST for deleting existing classes
+app.post("/deleteClass", function(req,res){
+
+	var myQuery = "DELETE FROM classes WHERE class_id = " + req.body.id + ";";
+	
+	con.query(myQuery, function(err, rows, fields) {
+	if (err) {
+		console.log(err);
+	}
+	});
+	
+	res.send();
+});
+
 //Gives HTML response for editing a class
 app.get("/editClass", function(req,res){
 	var classID = req.query.id;
@@ -115,6 +129,7 @@ app.get("/editClass", function(req,res){
 		rv += '<h1>Editing Class with PIN#:<div id="pin">' + classID.toString() + '</div></h1>';
 		rv += '<div id="error"></div>';
 		rv += '<button type="button" id="buttonSubmit">Submit</button>';
+		rv += '<button type="button" id="buttonDelete">Delete Class</button>';
 		rv += '<button type="button" id="buttonReturn">Return to Hub Page</button>';
 	
 		var myClass = null;

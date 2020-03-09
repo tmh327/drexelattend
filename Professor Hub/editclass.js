@@ -1,9 +1,23 @@
 var myTimer;
+var profID = getQueryVariable("profid");
+var classID = getQueryVariable("id");
 
 document.getElementById("buttonSubmit").addEventListener("click", validateData);
+document.getElementById("buttonDelete").addEventListener("click", requestDelete);
 document.getElementById("buttonReturn").addEventListener("click", function(){
-	document.location.href='professorhub.html';
+	document.location.href='professorhub.html?profid=' + profID.toString();
 });
+
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
 
 function request(){
 	//Form new xhttp request
@@ -11,7 +25,7 @@ function request(){
 	xhttp.onreadystatechange = function () {
 		if(xhttp.readyState == 4 && xhttp.status == 200) {
 			//Upon reception of response, distribute received info
-			document.location.href='professorhub.html';
+			document.location.href='professorhub.html?profid=' + profID.toString();
 		}
 	}
 	
@@ -23,6 +37,27 @@ function request(){
 	xhttp.open("POST",URL);
 	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhttp.send(queryString);
+}
+
+function requestDelete(){
+	//Form new xhttp request
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if(xhttp.readyState == 4 && xhttp.status == 200) {
+			//Upon reception of response, distribute received info
+			document.location.href='professorhub.html?profid=' + profID.toString();
+		}
+	}
+	
+	//Prep Query String
+	let queryString = {};
+	queryString.id = classID;
+	
+	//Prep and send URL with latitude and logitude data
+	let URL = "http://localhost:8080/deleteClass";
+	xhttp.open("POST",URL);
+	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xhttp.send(JSON.stringify(queryString));
 }
 
 function getClasses(){
