@@ -1,3 +1,4 @@
+    create database drexel_attend;
     create table professors (professor_id INT PRIMARY KEY AUTO_INCREMENT, username varchar(250) NOT NULL UNIQUE, password varchar(250) NOT NULL);
     create table classes (class_id INT PRIMARY KEY AUTO_INCREMENT, name varchar(250) NOT NULL, professor_id int not null, foreign key (professor_id) references professors(professor_id));
     create table attend (id INT PRIMARY KEY AUTO_INCREMENT, student varchar(250) NOT NULL, class_id int not null, foreign key (class_id) references classes(class_id));
