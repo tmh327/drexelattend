@@ -1,0 +1,110 @@
+@font-face {
+  font-family: Futura;;
+  src: url(FuturaCondensedBold.otf);
+}
+
+.flexcont {
+	display: flex;
+	flex-direction: column;
+	
+	color: #ffffff;
+	font-family: Futura;
+}
+
+body {
+	background-image: url("classroom.jpg");
+	background-size: 1920px;
+}
+
+td, th {
+	outline: 2px solid #07294d;
+	padding: 5px;
+	
+	font-family: Georgia;
+}
+
+#logo {
+	
+	width: 250px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	padding: 0px 15px 0px 15px;
+	
+	text-align: center;
+	background-color: #ffc600;
+}
+
+img {
+	align-self: center;
+}
+
+.button {
+	padding: 15px 32px;
+	
+	background-color: #07294d;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	font-family: Futura;
+}
+
+#logout a{
+	color: white;
+}
+
+#classes {
+	flex: 0 1 50%;
+	display: block;
+	
+	
+	padding: 0px 15px 15px 15px;
+	margin: 15px;
+	
+	color: #07294d;
+	background-color: rgba(255, 255, 255, 0.9);
+	
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.35);
+}
+
+#classes > * {
+	opacity: 1;
+}
+
+#header {
+	display: flex;
+	flex-direction: row;
+	flex: 0 1 100%;
+	
+	background-color: #07294d;
+	
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.35);
+}
+
+#header h1, #header h3 {
+	padding-left: 25px;
+}
+
+#profInfo {
+	flex: 0 1 50%;
+	
+	text-align: left;
+}
+
+#logout {
+	flex: 0 1 50%;
+	
+	text-align: right;
+	padding-right: 15px;
+	
+	font-family: Georgia;
+}
+
+#error {
+	font-family: Georgia;
+	margin-bottom: 5px;
+}

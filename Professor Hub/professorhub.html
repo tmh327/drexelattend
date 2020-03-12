@@ -4,15 +4,27 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="professorhub.js" defer></script>
+		<link href="professorhub.css" rel="stylesheet">
 		<title>Professor Hub Page</title>
 	</head>
-		<h1>Greetings, Professor!</h1>
-		<h3>Your pin number is <span id="pin"></span>.</h3>
-		<div></div>
-		<h2>My Classes:</h2>
-		<table id="classtable"></table>
-		<p></p>
-		<button type="button" id="buttonCreate">Create New Class</button>
 	<body>
+		<div class="flexcont">
+			<div id="header">
+				<div id="logo"><img src="drexel-logo.png" alt="logo" width=200></div>
+				<div id="profInfo">
+					<h1>Greetings, Professor!</h1>
+					<h3>Your pin number is <span id="pin"></span>.</h3>
+				</div>
+				<div id="logout">
+					<p>Is this not you? Please <a href="https://www.google.com">Log Out</a></p>
+				</div>
+			</div>
+			<div id="classes">
+				<h2>MY CLASSES:</h2>
+				<table id="classtable"></table>
+				<p></p>
+				<button type="button" id="buttonCreate" class="button">Create New Class</button>
+			</div>
+		</div>
 	</body>
 </html>

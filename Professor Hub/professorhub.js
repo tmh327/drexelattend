@@ -55,7 +55,7 @@ function parseClasses(classJSON){
 			rv += "<td>" + currentClass.timeframe.toString() + "</td>";
 			let dayString = generateDayIndicator(currentClass.days);
 			rv += "<td>" + dayString + "</td>";
-			rv += "<td><a href=http://localhost:8080/editClass?profid=" + profID.toString() + "&id=" + classJSON.rows[x].class_id.toString() +">Edit Class</a></td>"
+			rv += "<td><a href=http://localhost:8080/editclass.html?profid=" + profID.toString() + "&id=" + classJSON.rows[x].class_id.toString() +">Edit Class</a></td>"
 			
 			rv += "</tr>";
 		}

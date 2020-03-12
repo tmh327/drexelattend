@@ -24,7 +24,6 @@ function getQueryVariable(variable)
 //////////////////////////
 
 document.getElementById("buttonSubmit").addEventListener("click", validateData);
-document.getElementById("buttonDelete").addEventListener("click", requestDelete);
 document.getElementById("buttonReturn").addEventListener("click", function(){
 	document.location.href='professorhub.html?profid=' + profID.toString();
 });
@@ -32,6 +31,22 @@ document.getElementById("buttonReturn").addEventListener("click", function(){
 ////////////////////////
 // SERVER INTERACTION //
 ////////////////////////
+
+//Get initial info
+function requestExistingInfo(){//Form new xhttp request
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if(xhttp.readyState == 4 && xhttp.status == 200) {
+			//Upon reception of response, distribute received info
+			parseReceivedInfo(JSON.parse(xhttp.responseText));
+		}
+	}
+	
+	//Prep URL
+	let URL = "./getclassbypin?id=" + classID.toString();
+	xhttp.open("GET",URL,true);
+	xhttp.send();
+}
 
 //Save changes
 function request(){
@@ -75,6 +90,49 @@ function requestDelete(){
 	xhttp.open("POST",URL);
 	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhttp.send(queryString);
+}
+
+//////////////////////////
+// MANAGE INSERTED INFO //
+//////////////////////////
+
+requestExistingInfo();
+
+//////////////////////////////
+// DISTRIBUTE RECEIVED INFO //
+//////////////////////////////
+
+function parseReceivedInfo(json){
+	//var json = JSON.parse(json);
+	var myClass = null;
+	
+	console.log(json);
+	if (json.classes[0] != null){
+		myClass = json.classes[0];
+	}
+	
+	if (myClass == null){
+		console.log("Error getting class.");
+	}else{
+		document.getElementById("classNameInput").value = myClass.name;
+		document.getElementById("classSectInput").value = myClass.section;
+		document.getElementById("classLocInput").value = myClass.loc;
+		
+		var myTimes = myClass.timeframe.split(/-|:/);
+		document.getElementById("startHrInput").value = myTimes[0].padStart(2, "0");
+		document.getElementById("startMinInput").value = myTimes[1].padStart(2, "0");
+		document.getElementById("endHrInput").value = myTimes[2].padStart(2, "0");
+		document.getElementById("endMinInput").value = myTimes[3].padStart(2, "0");
+		
+		var dayIDs = ["checkM", "checkTu", "checkW", "checkTh", "checkF"];
+		var dayLabels = ["Monday (M)", "Tuesday (T)", "Wednesday (W)", "Thursday (Th)", "Friday (F)"];
+		var myCheckboxes = document.querySelectorAll(".dayCheck");
+		for(var x=0; x < 5; x++){
+			if(myClass.days[x] == 1){
+				myCheckboxes[x].checked = true;
+			}
+		}
+	}
 }
 
 ///////////////////////////
@@ -187,7 +245,7 @@ function between(x, min, max) {
 function getQueryFromInputs(){
 	rv = {};
 	//Get Unique class ID
-	rv.id = document.getElementById("pin").innerHTML.toString();
+	rv.id = classID;
 	
 	//Get Name
 	rv.name = document.getElementById("classNameInput").value.toString();
