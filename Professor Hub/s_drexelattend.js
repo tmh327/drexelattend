@@ -234,14 +234,14 @@ app.post('/register', (req, res) => {
                 };
                 console.log(rows)
             });// End of inserting new user
-            return res.redirect('/login')
+            return res.redirect('/login.html')
         } else {
             console.log("There is an account associated with the username.")
-            return res.redirect('/register')
+            return res.redirect('/register.html')
         }
     }); // End of query
     } else {// End of checking if username and password are entered
-        return res.redirect('/register')
+        return res.redirect('/register.html')
     }
 })
 
