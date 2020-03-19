@@ -151,21 +151,11 @@ const users = [{id: 0, username:'placeholder', password:'placeholder'}]
 // Middleware to direct user to login if the user is not logged in
 const redirectLogin = (req,res,next) =>{
   if(!req.session.userId) {
-    res.redirect('/login')
+    res.redirect('/login.html')
   } else {
     next()
   }
 }
-
-// Middleware to direct user to home or other page if the user is logged in
-const redirectHome = (req,res,next) =>{
-  if(!req.session.userId) {
-    res.redirect('/home')
-  } else {
-    next()
-  }
-}
-
 
 // Middleware to get userId from req.session. userId indicates if the user is logged in.
 app.use((req,res,next)=>{
@@ -173,13 +163,6 @@ app.use((req,res,next)=>{
    if (userId){res.locals.user = users.find(user=>user.id ===userId)} 
    next()
  })
-
-app.get('/home', redirectLogin, (req, res) => {
-  const { user } = res.locals;
-  res.send(`<h1>Home</h1>
-    <a href='/'>Main</a>
-    Username: ${user.username}`)
-})
 
 // Process login info
 app.post('/login', (req, res) => {
@@ -203,7 +186,7 @@ app.post('/login', (req, res) => {
             password
             }
             users.push(user)
-            return res.redirect('/home.html')
+            return res.redirect('/professorhub.html?profid=' + professor_id.toString())
         }; // End of checking if the retrieved data is undefined
     });// End of query
     } else {
@@ -246,12 +229,12 @@ app.post('/register', (req, res) => {
 })
 
 // Logout from session
-app.post('/logout', redirectLogin, (req, res) => {
+app.get('/logout', redirectLogin, (req, res) => {
   req.session.destroy(err => {
     if (err){
-      return res.redirect('/home')
+      return res.redirect('/login.html')
     }
     res.clearCookie()
-    res.redirect('/login')
+    res.redirect('/login.html')
   })
 })
