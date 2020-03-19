@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="professorhub.css" rel="stylesheet">
+        <title>Login Page</title>
+    </head>
+    <body>
+        <div class="flexcont">
+            <div id="header">
+                <div id="logo"><img src="drexel-logo.png" alt="logo" width=200></div>
+                <div id="profInfo">
+                    <h1>Greetings, Professor!</h1>
+                </div>
+                <div id="logout">
+                </div>
+            </div>
+            <div id="classes">
+                <h2>Login:</h2>
+                <p></p>
+                <form method='post' action='/login'>
+                <p>Username</p>
+                <input type='username' name='username' placeholder='Username' required />
+                <br>
+                <p>Password</p>
+                <input type='password' name='password' placeholder='Password' required />
+                <br>
+                <p></p>
+                <input type="submit" id="buttonSubmit" class="button">
+                <button type="button" id="buttonReturn" class="button" onclick="window.location.href='/register.html';">Go to Register</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
