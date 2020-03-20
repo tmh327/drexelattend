@@ -168,16 +168,16 @@ app.post("/student", function(req,res) {
       console.log(studenttime);
       console.log(startime);
       console.log(endtime);
-      if (studenttime < startime || studenttime > endtime){
+      if (studenttime < startime || studenttime > endtime){ //If student sign in too early/too late
         console.log("You can't sign in now!");
        }
         let class_loc = result[0].loc.split(" ").join("%20");
         settings.url = `https://us1.locationiq.com/v1/search.php?key=10d8c3e14d9a3c&q=${class_loc}&format=json`
         request(settings, function (error, response, body) {
           const json = JSON.parse(body);
-          class_geo = [json.lat, json.lon];
+          class_geo = [json.lat, json.lon]; 
         });
-        if (req.body.loc != class_geo) {
+        if (req.body.loc != class_geo) { //if the student location is not the same as the class room location
           console.log("You are not at the right location!");
           res.status(404)        // HTTP status 404: NotFound
              .send('Not found');
