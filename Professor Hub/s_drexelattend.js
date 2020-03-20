@@ -3,15 +3,15 @@
 //////////////////
 
 //import key
-let myKey = require("../sqlinfo.json");
+//let myKey = require("../sqlinfo.json");
 
 //import database and login info
 let mysql = require('mysql');
 let con = mysql.createConnection({
 	'host': 'localhost',
-	'user': myKey.user,
-	'password': myKey.passwd,
-	'database': 'drexelattend'
+	'user': 'root',
+	'password': '12345678',
+	'database': 'drexel_attend'
 });
 
 //import and initialize express object
@@ -131,7 +131,6 @@ app.post("/editClass", function(req,res){
 app.post("/deleteClass", function(req,res){
 
 	var myQuery = "DELETE FROM classes WHERE class_id = " + req.body.id + ";";
-	
 	con.query(myQuery, function(err, rows, fields) {
 	if (err) {
 		console.log(err);
@@ -140,6 +139,26 @@ app.post("/deleteClass", function(req,res){
 	
 	res.send();
 });
+
+
+//POST for making new attendance instance
+app.post("/student", function(req,res) {	
+  let classid; 
+  var myQuery = "SELECT class_id FROM classes WHERE name='"+ req.body.class_name + "' AND section='" + req.body.class_sect+"'";
+  con.query(myQuery, function(err, rows) {
+    if (err) {
+        console.log(err);
+        res.send(err);
+    }
+    else {
+      classid = rows[0].class_id;
+      console.log("found the class " + classid);
+      con.query("INSERT INTO attend (student, class_id) VALUES ('"+req.body.student_id+ "', '" + classid +"');");
+    }
+  });
+  	res.send();
+});
+
 
 /////////////////////////
 // REGISTER AND LOGIN  //

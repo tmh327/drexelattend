@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="student.js" defer></script>
+		<link href="professorhub.css" rel="stylesheet">
+		<title>Submit Attendance Page</title>
+	</head>
+	<body>
+		<div class="flexcont">
+			<div id="header">
+				<div id="logo"><img src="drexel-logo.png" alt="logo" width=200></div>
+				<div id="profInfo">
+					<h1>Attendance Submission</h1>
+				</div>
+				
+			</div>
+			<div id="classes">
+                <!-- STUDENT AND CLASS NAME TEXT ENTRY-->
+                <p>Student ID</p>
+				<input type="text" name="studentNameInput" id="studentNameInput" placeholder="Enter Your ID Here">
+				<p>Class Name</p>
+				<input type="text" name="classNameInput" id="classNameInput" placeholder="Enter Class Name Here">
+				<p>Class Section</p>
+				<input type="text" name="classSectInput" id="classSectInput" placeholder="Enter Class Section Here">
+
+				<!-- SUBMISSION-->
+				<div id="error"></div>
+				<button type="button" id="buttonSubmit" class="button">Submit</button>
+				<button type="button" id="buttonReturn" class="button">Return to Submission</button>
+			</div>
+		</div>
+	</body>
+</html>
