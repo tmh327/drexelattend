@@ -13,3 +13,6 @@ INSERT into attend(student, class_id)
     values('trang', '1'), ('john', '4');
 
 select A.student, C.name, P.username from attend A INNER JOIN classes C on C.class_id = A.class_id INNER JOIN professors P on P.professor_id = C.professor_id;
+
+
+select A.student from attend A INNER JOIN classes C on C.class_id = A.class_id WHERE C.class_id='1';
