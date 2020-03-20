@@ -140,23 +140,64 @@ app.post("/deleteClass", function(req,res){
 	res.send();
 });
 
+let settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://us1.locationiq.com/v1/search.php?key=YOUR_PRIVATE_TOKEN&q=Empire%20State%20Building&format=json",
+  "method": "GET"
+}
 
 //POST for making new attendance instance
 app.post("/student", function(req,res) {	
   let classid; 
-  var myQuery = "SELECT class_id FROM classes WHERE name='"+ req.body.class_name + "' AND section='" + req.body.class_sect+"'";
-  con.query(myQuery, function(err, rows) {
+  let class_geo;
+  var myQuery = "SELECT class_id, timeframe, loc FROM classes WHERE name='"+ req.body.class_name + "' AND section='" + req.body.class_sect+"'";
+  con.query(myQuery, function(err, result) {
     if (err) {
         console.log(err);
         res.send(err);
     }
     else {
-      classid = rows[0].class_id;
+      classid = result[0].class_id;
       console.log("found the class " + classid);
-      con.query("INSERT INTO attend (student, class_id) VALUES ('"+req.body.student_id+ "', '" + classid +"');");
+      //check if student sign in at right time
+      /*
+      var studenttime = new Date("01/01/2000 "+req.body.timestamp.split("-")[0]);
+      var startime = new Date("01/01/2000 "+result[0].timeframe.split("-")[0]);
+      var endtime = new Date("01/01/2000 "+result[0].timeframe.split("-")[1]);
+      console.log(studenttime);
+      console.log(startime);
+      console.log(endtime);
+      if (studenttime < startime || studenttime > endtime){
+        console.log("You can't sign in now!");
+       }
+        let class_loc = result[0].loc.split(" ").join("%20");
+        settings.url = `https://us1.locationiq.com/v1/search.php?key=10d8c3e14d9a3c&q=${class_loc}&format=json`
+        request(settings, function (error, response, body) {
+          const json = JSON.parse(body);
+          class_geo = [json.lat, json.lon];
+        });
+        if (req.body.loc != class_geo) {
+          console.log("You are not at the right location!");
+          res.status(404)        // HTTP status 404: NotFound
+             .send('Not found');
+        }
+        */
+        con.query("INSERT INTO attend (student, class_id) VALUES ('"+req.body.student_id+ "', '" + classid +"');"); 
     }
   });
   	res.send();
+});
+
+//GET for getting student attendance
+app.get("/attendance", function(req,res){
+	con.query('select A.student, C.name, C.section from attend A INNER JOIN classes C on C.class_id = A.class_id WHERE C.class_id= ' + req.query.classid, function(err, rows, fields) {
+	if (err) {
+		console.log(err);
+		res.send(err);
+	}
+		res.send(JSON.stringify({ "rows": rows }));
+	});
 });
 
 

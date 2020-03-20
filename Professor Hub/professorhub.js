@@ -1,4 +1,5 @@
 var profID = getQueryVariable("profid");
+var classID = getQueryVariable("classid");
 request();
 document.getElementById("pin").innerHTML = profID.toString();
 
@@ -42,7 +43,7 @@ function parseClasses(classJSON){
 		rv = "You have no registered classes.";
 	}else{
 		//Prepare table header
-		rv = "<tr><th>Class PIN</th><th>Class Name</th><th>Section</th><th>Location</th><th>Time</th><th>Days</th><th></th></tr>";
+		rv = "<tr><th>Class PIN</th><th>Class Name</th><th>Section</th><th>Location</th><th>Time</th><th>Days</th><th></th><th></th></tr>";
 		
 		//Form table rows
 		for(let x=0; x<classJSON.rows.length; x++){
@@ -56,11 +57,12 @@ function parseClasses(classJSON){
 			let dayString = generateDayIndicator(currentClass.days);
 			rv += "<td>" + dayString + "</td>";
 			rv += "<td><a href=http://localhost:8080/editclass.html?profid=" + profID.toString() + "&id=" + classJSON.rows[x].class_id.toString() +">Edit Class</a></td>"
+			rv += "<td><a href=http://localhost:8080/attendance.html?profid=" + profID.toString() + "&classid=" + classJSON.rows[x].class_id.toString() +">Class Attendance</a></td>"
 			
 			rv += "</tr>";
 		}
 	}
-	
+
 	//Update DOM
 	document.getElementById("classtable").innerHTML = rv;
 }

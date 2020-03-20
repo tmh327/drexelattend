@@ -61,10 +61,14 @@ function request(){
 ///////////////////////////
 // GET STUDENTS POSITION //
 ///////////////////////////
+
+let lon, lat;
 function getPosition(pos){
-    let lon = pos.coords.longitude;
-    let lat = pos.coords.latitude;
+    lon = pos.coords.longitude;
+    lat = pos.coords.latitude;
 }
+
+
 function error(){
     document.getElementById("error").innerHTML = "Server cannot get your location";
 }
@@ -74,8 +78,8 @@ function error(){
 ///////////////////////////
 
 function validateData(){
-    //navigator.geolocation.getCurrentPosition(getPosition,error);
-    //console.log("getting device's position");
+    navigator.geolocation.getCurrentPosition(getPosition,error);
+    console.log("getting device's position");
     //Prepare for data validation! Error code is 0 by default.
 	var errorCode = 0;
 	
@@ -113,7 +117,7 @@ function getQueryFromInputs(){
 	rv.class_sect = document.getElementById("classSectInput").value.toString();
 	
 	//Get Location
-	//rv.loc = [lon, lat];
+	rv.loc = [lat, lon];
 	
 	//Get Day and Time
     var today = new Date();
